@@ -5,12 +5,14 @@ import { FastifyInstance } from 'fastify'
 export async function getPoll(app: FastifyInstance) {
     
     app.get('/polls/:pollId', async (request, reply) => {
+        // Coletar parametros do request
         const getPollParams = z.object({
             pollId: z.string().uuid(),
         })
 
         const { pollId } = getPollParams.parse(request.params)
 
+        // Localizar o poll
         const poll = await prisma.poll.findUnique({
             where: {
                 id: pollId,
@@ -25,6 +27,7 @@ export async function getPoll(app: FastifyInstance) {
             }
         })
         
+        // Responder com os dados do poll
         return reply.send({ poll })
     })
 }

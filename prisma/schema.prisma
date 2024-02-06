@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Modelo dos polls
 model Poll {
   id        String   @id @default(uuid())
   title     String
@@ -20,6 +21,7 @@ model Poll {
   votes   Vote[]
 }
 
+// Modelo das opções dentro do poll
 model PollOption {
   id     String @id @default(uuid())
   title  String
@@ -29,6 +31,7 @@ model PollOption {
   votes Vote[]
 }
 
+// Modelo dos votos
 model Vote {
   id           Int      @id @default(autoincrement())
   sessionId    String

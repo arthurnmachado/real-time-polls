@@ -6,15 +6,18 @@ import cookie from '@fastify/cookie'
 
 const app = fastify()
 
+// Registrando o cookie unico assinado
 app.register(cookie, {
     secret: "polls-web-nlw", 
     hook: 'onRequest', 
   })
 
+// Registrando as rotas
 app.register(createPoll)
 app.register(getPoll)
 app.register(voteOnPoll)
 
+// Verificar se está rodando
 app.listen({port: 3333}).then(() => {
     console.log('HTTP server running!')
 })

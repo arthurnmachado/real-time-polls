@@ -7,7 +7,7 @@ export async function voteOnPoll(app: FastifyInstance) {
     
     app.post('/polls/:pollId/votes', async (request, reply) => {
         
-        
+        // Coletar corpo e parametros do request
         const voteOnPollBody = z.object({
             pollOptionId: z.string().uuid(),
         })
@@ -21,6 +21,7 @@ export async function voteOnPoll(app: FastifyInstance) {
 
         let { sessionId } = request.cookies
 
+        // Ja acessou
         if(sessionId){
             const userPreviousVoteOnPoll = await prisma.vote.findUnique({
                 where: {
@@ -38,15 +39,16 @@ export async function voteOnPoll(app: FastifyInstance) {
                         id: userPreviousVoteOnPoll.id,
                     },
                 })
-                // Criar novo voto
             } else if(userPreviousVoteOnPoll){
+                // Ja votou na mesma opção
                 return reply.status(400).send({message: 'You already voted on this poll.'})
             }
         }
 
+        // Nunca acessou
         if(!sessionId) {
+            // Setar cookie para verificação do voto
             sessionId = randomUUID()
-
             reply.setCookie('sessionId', sessionId, {
                 path: '/',
                 maxAge: 60 * 60 * 24 * 30, // 30 days,
@@ -54,7 +56,8 @@ export async function voteOnPoll(app: FastifyInstance) {
                 httpOnly: true,
             })
         }
-    
+        
+        // Criação do voto
         await prisma.vote.create({
             data: {
                 sessionId,

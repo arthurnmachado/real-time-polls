@@ -5,6 +5,7 @@ import { FastifyInstance } from 'fastify'
 export async function createPoll(app: FastifyInstance) {
     
     app.post('/polls', async (request, reply) => {
+        // Coletar corpo do request
         const createPollBody = z.object({
             title: z.string(),
             options: z.array(z.string()),
@@ -12,6 +13,7 @@ export async function createPoll(app: FastifyInstance) {
 
         const { title, options } = createPollBody.parse(request.body)
 
+        // Criar o poll
         const poll = await prisma.poll.create({
             data:{
                 title,
@@ -25,6 +27,7 @@ export async function createPoll(app: FastifyInstance) {
             }
         })
         
+        // Responder com o ID do poll
         return reply.status(201).send({ pollId: poll.id })
     })
 }
