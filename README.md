@@ -14,7 +14,7 @@ A real-time voting system where users can create a poll and other users can cast
 - Setup PostgreSQL and Redis (`docker compose up -d`);
 - Copy `.env.example` file (`cp .env.example .env`);
 - Run application (`npm run dev`);
-- Test it! (I personally recommend testing with [Hoppscotch](https://hoppscotch.io/)).
+- Test it! (I personally recommend testing with [Hoppscotch](https://hoppscotch.io/)). (Maybe it won't work for WebSockets, so use the NPM library `wscat` for it)
 
 ## HTTP
 
