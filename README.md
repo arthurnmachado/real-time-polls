@@ -31,7 +31,7 @@ Create a new poll.
     "JavaScript",
     "Java",
     "PHP",
-    "C#"
+    "C++"
   ]
 }
 ```
